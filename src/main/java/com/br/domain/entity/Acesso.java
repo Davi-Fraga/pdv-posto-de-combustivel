@@ -26,7 +26,7 @@ public class Acesso{
         this.usuario = usuario;
     }
 
-    public void serSenha(){
+    public void setSenha(){
         this.senha = senha;
     }
 }
