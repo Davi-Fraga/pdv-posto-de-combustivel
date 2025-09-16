@@ -11,17 +11,21 @@ public class Pessoa {
 
     private Date dataNascimento;
 
-    private Integer numeroCtps;
+    private Long numeroCtps;
 
 
 
     //construtor
-    public Pessoa (String nomeCompleto, String cpfCnpj, Date dataNascimento, Integer numeroCtps){
+    public Pessoa (String nomeCompleto, String cpfCnpj, Date dataNascimento, Long numeroCtps){
         this.nomeCompleto = nomeCompleto;
         this.cpfCnpj = cpfCnpj;
         this.dataNascimento = dataNascimento;
         this.numeroCtps = numeroCtps;
     };
+
+    public Pessoa() {
+
+    }
 
 
     //getters
@@ -37,7 +41,7 @@ public class Pessoa {
         return dataNascimento;
     }
 
-    public Integer getNumeroCtps() {
+    public Long getNumeroCtps() {
         return numeroCtps;
     }
 
@@ -54,7 +58,7 @@ public class Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
-    public void setNumeroCtps(Integer numeroCtps) {
+    public void setNumeroCtps(Long numeroCtps) {
         this.numeroCtps = numeroCtps;
     }
 };
