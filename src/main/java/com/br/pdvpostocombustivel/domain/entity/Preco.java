@@ -1,13 +1,38 @@
 package com.br.pdvpostocombustivel.domain.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Preco{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    // Atributos
+
+    private Long id;
+
+    @Column(nullable = false)
     private BigDecimal valor;
+
+
+    @Column(length = 10, nullable = false)
     private String dataAlteracao;
+
+    @Column(nullable = false)
     private Date horaAlteracao;
+
+
+
+
+
+
 
     public Preco (BigDecimal valor, String dataAlteracao, Date horaAlteracao){
 
@@ -16,6 +41,15 @@ public class Preco{
         this.horaAlteracao = horaAlteracao;
     }
 
+
+    public Preco(){
+
+    }
+
+
+    public Long getId() {
+        return id;
+    }
 
     public BigDecimal getValor() {
         return valor;
@@ -27,6 +61,11 @@ public class Preco{
 
     public Date getHoraAlteracao(){
         return horaAlteracao;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setValor(BigDecimal valor) {

@@ -12,6 +12,6 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
     boolean existsByCpfCnpj(String cpfCnpj);
 
-    Boolean existsByNome(String nome);
+    boolean existsByNome(String nome);
 
 }

@@ -1,12 +1,33 @@
 package com.br.pdvpostocombustivel.domain.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 public class Produto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 200, nullable = false)
     private String nome;
-    private  String referencia;
+
+    @Column(length = 200, nullable = false)
     private String fornecedor;
+
+    @Column(length = 200, nullable = false)
+    private  String referencia;
+
+    @Column(length = 200, nullable = false)
     private String categoria;
+
+    @Column(length = 200, nullable = false)
     private String marca;
+
+
+
 
 
     public Produto (String nome, String referencia, String fornecedor, String categoria, String marca) {
@@ -17,6 +38,17 @@ public class Produto {
         this.marca = marca;
     }
 
+
+    public Produto(){
+
+    }
+
+    //Getters
+
+
+    public Long getId() {
+        return id;
+    }
 
     public String getNome() {
         return nome;
@@ -38,6 +70,10 @@ public class Produto {
         return marca;
     }
 
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public void setNome(String nome) {
         this.nome = nome;
