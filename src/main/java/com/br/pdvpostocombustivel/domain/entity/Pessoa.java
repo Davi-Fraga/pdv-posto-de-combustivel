@@ -1,5 +1,6 @@
 package com.br.pdvpostocombustivel.domain.entity;
 
+import com.br.pdvpostocombustivel.enums.TipoPessoa;
 import jakarta.persistence.*;
 import jakarta.websocket.OnMessage;
 import org.springframework.cglib.core.Local;
@@ -16,23 +17,27 @@ public class Pessoa {
     //atributos
     private Long id;
 
-    @Column(length = 200, nullable = false)
+    @Column(name = "nome_completo", length = 200, nullable = false)
     private String nomeCompleto;
 
 
-    @Column(length = 14, nullable = false)
+    @Column(name ="cpf_cnpj",length = 14, nullable = false)
     private String cpfCnpj;
 
-    @Column(length = 10, nullable = false)
+    @Column(name = "data_nascimento", length = 10, nullable = false)
     private LocalDate dataNascimento;
 
-    @Column(length = 20)
+    @Column(name = "numero_ctps",length = 20)
     private Long numeroCtps;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo pessoa", nullable = false, length = 15)
+    private TipoPessoa tipoPessoa;
 
 
     //construtor
-    public Pessoa (String nomeCompleto, String cpfCnpj, LocalDate dataNascimento, Long numeroCtps){
+    public Pessoa (String nomeCompleto, String cpfCnpj, LocalDate dataNascimento, Long numeroCtps, TipoPessoa tipoPessoa){
+        this.tipoPessoa = tipoPessoa;
         this.nomeCompleto = nomeCompleto;
         this.cpfCnpj = cpfCnpj;
         this.dataNascimento = dataNascimento;
@@ -46,6 +51,10 @@ public class Pessoa {
 
     //getters
 
+
+    public TipoPessoa getTipoPessoa() {
+        return tipoPessoa;
+    }
 
     public Long getId() {
         return id;
@@ -69,6 +78,10 @@ public class Pessoa {
 
     //setters
 
+
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
+    }
 
     public void setId(Long id) {
         this.id = id;
