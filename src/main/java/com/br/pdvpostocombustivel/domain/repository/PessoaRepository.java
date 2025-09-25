@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
     Optional<Pessoa> findByNome(String nome);
 
-    Optional<Pessoa> findByCPFcNPJ(String cpfCnpj);
+    Optional<Pessoa> findByCpfCnpj(String cpfCnpj);
 
     boolean existsByCpfCnpj(String cpfCnpj);
 

@@ -1,15 +1,15 @@
 package com.br.pdvpostocombustivel.domain.entity;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "produto")
 
 public class Produto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     @Column(length = 200, nullable = false)
     private String nome;
@@ -46,9 +46,6 @@ public class Produto {
     //Getters
 
 
-    public Long getId() {
-        return id;
-    }
 
     public String getNome() {
         return nome;
@@ -71,9 +68,6 @@ public class Produto {
     }
 
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setNome(String nome) {
         this.nome = nome;

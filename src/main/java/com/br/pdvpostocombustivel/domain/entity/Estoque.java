@@ -1,19 +1,16 @@
 package com.br.pdvpostocombustivel.domain.entity;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.springframework.aot.generate.GeneratedMethod;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 
 import java.math.BigDecimal;
-import java.util.Date;
+@Entity
+@Table(name = "estoque ")
 
 public class Estoque {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(nullable = false)
     private BigDecimal quantidade;
@@ -46,9 +43,7 @@ public class Estoque {
     //Getters
 
 
-    public Long getId() {
-        return id;
-    }
+
 
     public BigDecimal getQuantidade() {
         return quantidade;
@@ -73,9 +68,6 @@ public class Estoque {
     //Setters
 
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;

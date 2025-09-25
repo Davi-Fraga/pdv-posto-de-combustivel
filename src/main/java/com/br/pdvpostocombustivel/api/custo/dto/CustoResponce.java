@@ -1,4 +1,4 @@
-package com.br.pdvpostocombustivel.api.pessoa.dto;
+package com.br.pdvpostocombustivel.api.custo.dto;
 
 import java.util.Date;
 
