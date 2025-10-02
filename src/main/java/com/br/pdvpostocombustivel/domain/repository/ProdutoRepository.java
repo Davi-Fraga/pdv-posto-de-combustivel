@@ -5,7 +5,7 @@ import java.util.Optional;
 
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-    Optional<Produto> findByNome(String nome);
+  /*  Optional<Produto> findByNome(String nome);
 
     Optional<Produto> findByFornecedor(String fornecedor);
 
@@ -24,7 +24,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     boolean existsByCategoria(String categoria);
 
-    boolean existsByMarca(String marca);
+    boolean existsByMarca(String marca);*/
 
 
 }

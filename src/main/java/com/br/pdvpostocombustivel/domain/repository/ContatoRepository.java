@@ -6,7 +6,7 @@ import java.util.Optional;
 
 
 public interface ContatoRepository extends JpaRepository<Contato, Long> {
-    Optional<Contato> findByEndereco(String endereco);
+  /*  Optional<Contato> findByEndereco(String endereco);
 
     Optional<Contato> findByTelefone(String telefone);
 
@@ -16,6 +16,6 @@ public interface ContatoRepository extends JpaRepository<Contato, Long> {
 
     boolean existsByTelefone(String telefone);
 
-    boolean existsByEmail(String email);
+    boolean existsByEmail(String email);*/
 
 }

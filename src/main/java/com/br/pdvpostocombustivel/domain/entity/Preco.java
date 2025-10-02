@@ -2,74 +2,65 @@ package com.br.pdvpostocombustivel.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
+
 @Entity
 @Table(name = "preco")
+public class Preco {
 
-public class Preco{
-
-
-    // Atributos
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    //atributos
+    @Column(length = 10, nullable = false)
     private BigDecimal valor;
 
+    @Column(length = 10, nullable = false)
+    private LocalDate dataAlteracao;
 
     @Column(length = 10, nullable = false)
-    private String dataAlteracao;
+    private LocalDate horaAlteracao;
 
-    @Column(nullable = false)
-    private Date horaAlteracao;
+    //construtor
+    public Preco() {
+    }
 
-
-
-
-
-
-
-    public Preco (BigDecimal valor, String dataAlteracao, Date horaAlteracao){
-
-        this.valor = valor;
+    public Preco(BigDecimal valor, LocalDate dataAlteracao, LocalDate horaAlteracao) {
         this.dataAlteracao = dataAlteracao;
         this.horaAlteracao = horaAlteracao;
+        this.valor = valor;
     }
 
-
-    public Preco(){
-
+    //getters
+    public Long getId() {
+        return id;
     }
-
-
 
     public BigDecimal getValor() {
         return valor;
     }
-
-    public String getDataAlteracao(){
+    public LocalDate getDataAlteracao() {
         return dataAlteracao;
     }
-
-    public Date getHoraAlteracao(){
+    public LocalDate getHoraAlteracao() {
         return horaAlteracao;
     }
 
-
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
-
-    public void setDataAlteracao(String dataAlteracao) {
+    //setters
+    public void setDataAlteracao(LocalDate dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
     }
-
-    public void setHoraAlteracao(Date horaAlteracao) {
+    public void setHoraAlteracao(LocalDate horaAlteracao) {
         this.horaAlteracao = horaAlteracao;
+    }
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 }

@@ -1,96 +1,85 @@
 package com.br.pdvpostocombustivel.domain.entity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "custo")
+public class Custo {
 
-public class Custo{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    //atributos
 
-
-
-    @Column(nullable = false)
+    @Column(length = 5, nullable = false)
     private Double imposto;
 
-    @Column(nullable = false)
+    @Column(length = 10, nullable = false)
     private Double custoVariavel;
 
-    @Column(nullable = false)
+    @Column(length = 10, nullable = false)
     private Double custoFixo;
 
-    @Column(nullable = false)
+    @Column(length = 5, nullable = false)
     private Double margemLucro;
 
-    @Column(nullable = false)
-    private Date dataProcessamento;
+    @Column(length = 10, nullable = false)
+    private LocalDate dataProcessamento;
 
+    //construtor
+    public Custo() {
+    }
 
-
-
-    public Custo (Double custoFixo, Double imposto, Double custoVariavel, Double margemLucro, Date dataProcessamento){
+    public Custo(Double imposto, Double custoVariavel, Double custoFixo, Double margemLucro, LocalDate dataProcessamento) {
         this.imposto = imposto;
         this.custoVariavel = custoVariavel;
         this.custoFixo = custoFixo;
-        this.dataProcessamento = dataProcessamento;
         this.margemLucro = margemLucro;
-
+        this.dataProcessamento = dataProcessamento;
     }
 
-
-    public Custo(){
-
-    }
     //getters
-
-
-
-    public Double getImposto() {
-        return imposto;
-    }
-
-    public Double getCustoVariavel() {
-        return custoVariavel;
+    public Long getId() {
+        return id;
     }
 
     public Double getCustoFixo() {
         return custoFixo;
     }
-
+    public LocalDate getDataProcessamento() {
+        return dataProcessamento;
+    }
+    public Double getCustoVariavel() {
+        return custoVariavel;
+    }
+    public Double getImposto() {
+        return imposto;
+    }
     public Double getMargemLucro() {
         return margemLucro;
     }
 
-    public Date getDataProcessamento() {
-        return dataProcessamento;
-    }
-
-
     //setters
+    public void setCustoFixo(Double custoFixo) {
 
-
-
-
-    public void setImposto(Double imposto) {
-        this.imposto = imposto;
     }
-
     public void setCustoVariavel(Double custoVariavel) {
         this.custoVariavel = custoVariavel;
     }
-
-    public void setCustoFixo(Double custoFixo) {
-        this.custoFixo = custoFixo;
+    public void setDataProcessamento(LocalDate dataProcessamento) {
+        this.dataProcessamento = dataProcessamento;
     }
-
+    public void setImposto(Double imposto) {
+        this.imposto = imposto;
+    }
     public void setMargemLucro(Double margemLucro) {
         this.margemLucro = margemLucro;
-    }
-
-    public void setDataProcessamento(Date dataProcessamento) {
-        this.dataProcessamento = dataProcessamento;
     }
 }

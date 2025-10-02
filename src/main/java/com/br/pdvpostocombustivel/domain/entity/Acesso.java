@@ -2,62 +2,53 @@ package com.br.pdvpostocombustivel.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "acesso")
+public class Acesso {
 
-public class Acesso{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    //atributos
 
-
-
-    @Column(length = 200, nullable = false)
+    @Column(length = 30, nullable = false)
     private String usuario;
 
-    @Column(length = 200, nullable = false)
+    @Column(length = 15, nullable = false)
     private String senha;
 
+    //contrutor
+    public Acesso() {
+    }
 
-    //construtor
-    public Acesso (String usuario, String senha){
+    public Acesso(String usuario, String senha) {
         this.usuario = usuario;
-        this.senha = senha;
+        this.senha =senha;
     }
 
-    public Acesso(){
-
-    }
     //getters
-
-
-
-    public String getUsuario() {
-
-
-        return usuario;
+    public Long getId() {
+        return id;
     }
 
     public String getSenha() {
-
-
         return senha;
+    }
+    public String getUsuario() {
+        return usuario;
     }
 
     //setters
-
-
-
-
-    public void setUsuario(){
-
-
-        this.usuario = usuario;
-    }
-
-    public void setSenha(){
-
-
+    public void setSenha(String senha) {
         this.senha = senha;
+    }
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 }

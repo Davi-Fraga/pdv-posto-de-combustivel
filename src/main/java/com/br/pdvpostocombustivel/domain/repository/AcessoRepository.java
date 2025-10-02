@@ -7,12 +7,12 @@ import java.util.Optional;
 
 
 public interface AcessoRepository extends JpaRepository<Acesso, Long> {
-    Optional<Acesso> findByUsuario(String usuario);
+   /* Optional<Acesso> findByUsuario(String usuario);
 
     Optional<Acesso> findBySenha(String senha);
 
     boolean existsByUsuario(String usuario);
 
-    boolean existsBySenha(String senha);
+    boolean existsBySenha(String senha);*/
 
 }

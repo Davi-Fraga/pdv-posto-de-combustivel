@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface EstoqueRepository extends JpaRepository<Estoque, Long> {
 
-    Optional<Estoque> findByQuantidade(BigDecimal quantidade);
+   /* Optional<Estoque> findByQuantidade(BigDecimal quantidade);
 
     Optional<Estoque> findByLocalTanque(String localTanque);
 
@@ -27,7 +27,7 @@ public interface EstoqueRepository extends JpaRepository<Estoque, Long> {
 
     boolean existsByLoteFabricacao(String loteFabricacao);
 
-    boolean existsByDataValidade(String dataValidade);
+    boolean existsByDataValidade(String dataValidade);*/
 
 
 }
