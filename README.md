@@ -1,7 +1,9 @@
 pdv-posto-de-combustivel
+
 Repositório referente a um projeto realizado na faculdade
 
 Itens de Backlog
+
 1 - Novo Produto: Funcionalidades que ainda não existem no produto; 2 - Melhorias: Alterações em recursos existentes para aprimorar a experiência de usuário; 3 - Bugs: Defeitos e falhas; 4 - Dívida Técnica: Trabalho necessário para refatorar o código; 5 - Mudanças de Design e Problemas de UX: Alterações necessárias para melhorar a aparência do produto; 6 - Aquisição de Conhecimento (Spikes): Investigação ou prótotipo para mitigar dúvidas sobre o produto; 7 - Solicitações de Clientes e Partes: Demandas vindas de usuário e outras envolvidas no projeto;
 
 1.1 - Requisitos Não Funcionais 1.1.1 - Descritivo Técnico: # Backend desenvolvido em Java 21; # Maven para gestão dependência do projeto; # Swing para interface com o usuário; # Versionamento do projeto realizado: Git/Github;
