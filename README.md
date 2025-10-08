@@ -7,5 +7,3 @@ Itens de Backlog
 1.1 - Requisitos Não Funcionais 1.1.1 - Descritivo Técnico: # Backend desenvolvido em Java 21; # Maven para gestão dependência do projeto; # Swing para interface com o usuário; # Versionamento do projeto realizado: Git/Github;
 
 1.2 - Requisitos Funcionais 1.2.1 - Cadastro de frentistas 1.2.1.1 - Acesso 1.2.1.1.1 - usuario 1.2.1.1.2 - senha 1.2.1.2 - Contato 1.2.1.2.1 - telefone 1.2.1.2.2 - emial 1.2.1.2.3 - endereco 1.2.1.3 - Pessoa 1.2.2 - Cadastro de produtos 1.2.3 - Gestão de compras 1.2.4 - Gestão de recursos
-
-GRUPO 1.2.2 Lucas Vicente Pereira Costa Felipe Rohnelt Rodrigues dos Santos Miguel Melo Santos Gabriel Andrade Cunha Paulo Augusto Silva Miranda Évelyn de Morais Alves Soares Oliveira Vinicius Barbosa Puggina Guilherme Goncalves Mendonca
