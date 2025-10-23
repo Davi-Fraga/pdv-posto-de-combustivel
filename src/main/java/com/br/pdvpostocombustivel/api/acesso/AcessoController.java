@@ -20,11 +20,6 @@ public class AcessoController {
         this.acessoService = acessoService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AcessoResponse> login(@Valid @RequestBody AcessoRequest request) {
-        AcessoResponse response = acessoService.login(request);
-        return ResponseEntity.ok(response);
-    }
 
     @GetMapping
     public ResponseEntity<List<AcessoResponse>> listarTodos() {
@@ -51,6 +46,11 @@ public class AcessoController {
     ) {
         AcessoResponse atualizado = acessoService.update(id, request);
         return ResponseEntity.ok(atualizado);
+    }
+
+    @PatchMapping("/{id}")
+    public AcessoResponse patch(@PathVariable Long id, @RequestBody AcessoRequest req) {
+        return acessoService.patch(id, req);
     }
 
     @DeleteMapping("/{id}")

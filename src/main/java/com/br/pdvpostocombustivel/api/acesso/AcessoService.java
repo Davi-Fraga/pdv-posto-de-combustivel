@@ -71,4 +71,8 @@ public class AcessoService {
                 acesso.getTipoAcesso()
         );
     }
+
+    public AcessoResponse patch(Long id, AcessoRequest req) {
+        return null;
+    }
 }

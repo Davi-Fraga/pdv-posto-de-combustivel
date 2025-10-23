@@ -1,6 +1,7 @@
 package com.br.pdvpostocombustivel.api.estoque.dto;
 
 import com.br.pdvpostocombustivel.enums.TipoEstoque;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ public record EstoqueRequest(
         @NotBlank(message = "O nome do fornecedor não pode ser vazio.")
         String fornecedor,
 
+        @JsonFormat
         @NotNull(message = "A data de entrada é obrigatória.")
         @PastOrPresent(message = "A data de entrada não pode ser no futuro.")
         LocalDate dataEntrada

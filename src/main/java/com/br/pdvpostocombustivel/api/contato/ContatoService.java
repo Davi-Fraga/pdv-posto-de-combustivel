@@ -20,8 +20,8 @@ public class ContatoService {
     }
 
     @Transactional(readOnly = true)
-    public List<ContatoResponse> findAllByPessoa(Long pessoaId) {
-        return domainService.findAllByPessoa(pessoaId).stream()
+    public List<ContatoResponse> findAll() {
+        return domainService.findAll().stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
     }
@@ -32,9 +32,9 @@ public class ContatoService {
     }
 
     @Transactional
-    public ContatoResponse create(Long pessoaId, ContatoRequest request) {
+    public ContatoResponse create(ContatoRequest request) {
         Contato contato = toEntity(request);
-        Contato novoContato = domainService.save(pessoaId, contato);
+        Contato novoContato = domainService.save(contato);
         return toResponse(novoContato);
     }
 
@@ -46,21 +46,28 @@ public class ContatoService {
     }
 
     @Transactional
+    public ContatoResponse patch(Long id, ContatoRequest req) {
+        Contato contato = toEntity(req);
+        Contato contatoAtualizado = domainService.patch(id, contato);
+        return toResponse(contatoAtualizado);
+    }
+
+    @Transactional
     public void delete(Long contatoId) {
         domainService.delete(contatoId);
     }
 
     private Contato toEntity(ContatoRequest request) {
-        // A pessoa é nula aqui, pois será definida no serviço de domínio.
-        return new Contato(request.tipoContato(), request.valor(), null);
+        return new Contato(request.telefone(), request.email(), request.endereco(), request.tipoContato());
     }
 
     private ContatoResponse toResponse(Contato contato) {
         return new ContatoResponse(
                 contato.getId(),
-                contato.getTipoContato(),
-                contato.getValor(),
-                contato.getPessoa() != null ? contato.getPessoa().getId() : null
+                contato.getTelefone(),
+                contato.getEmail(),
+                contato.getEndereco(),
+                contato.getTipoContato()
         );
     }
 }

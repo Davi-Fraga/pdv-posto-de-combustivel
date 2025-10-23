@@ -5,13 +5,12 @@ import com.br.pdvpostocombustivel.api.contato.dto.ContatoResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/contatos")
 public class ContatoController {
 
     private final ContatoService contatoService;
@@ -20,43 +19,40 @@ public class ContatoController {
         this.contatoService = contatoService;
     }
 
-    // --- Endpoints aninhados sob Pessoa --- //
-
-    @GetMapping("/pessoas/{pessoaId}/contatos")
-    public ResponseEntity<List<ContatoResponse>> listarContatosPorPessoa(@PathVariable Long pessoaId) {
-        List<ContatoResponse> contatos = contatoService.findAllByPessoa(pessoaId);
-        return ResponseEntity.ok(contatos);
+    @GetMapping
+    public List<ContatoResponse> listarContatos() {
+        return contatoService.findAll();
     }
 
-    @PostMapping("/pessoas/{pessoaId}/contatos")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ContatoResponse criarContatoParaPessoa(
-            @PathVariable Long pessoaId,
+    public ContatoResponse criarContato(
             @Valid @RequestBody ContatoRequest request
     ) {
-        return contatoService.create(pessoaId, request);
+        return contatoService.create(request);
     }
 
-    // --- Endpoints diretos para Contato --- //
-
-    @GetMapping("/contatos/{contatoId}")
-    public ResponseEntity<ContatoResponse> buscarContatoPorId(@PathVariable Long contatoId) {
-        ContatoResponse contato = contatoService.findById(contatoId);
-        return ResponseEntity.ok(contato);
+    @GetMapping("/{id}")
+    public ContatoResponse buscarContatoPorId(@PathVariable Long id) {
+        return contatoService.findById(id);
     }
 
-    @PutMapping("/contatos/{contatoId}")
-    public ResponseEntity<ContatoResponse> atualizarContato(
-            @PathVariable Long contatoId,
+    @PutMapping("/{id}")
+    public ContatoResponse atualizarContato(
+            @PathVariable Long id,
             @Valid @RequestBody ContatoRequest request
     ) {
-        ContatoResponse atualizado = contatoService.update(contatoId, request);
-        return ResponseEntity.ok(atualizado);
+        return contatoService.update(id, request);
     }
 
-    @DeleteMapping("/contatos/{contatoId}")
+    @PatchMapping("/{id}")
+    public ContatoResponse patch(@PathVariable Long id, @Valid @RequestBody ContatoRequest req) {
+        return contatoService.patch(id, req);
+    }
+
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletarContato(@PathVariable Long contatoId) {
-        contatoService.delete(contatoId);
+    public void deletarContato(@PathVariable Long id) {
+        contatoService.delete(id);
     }
 }

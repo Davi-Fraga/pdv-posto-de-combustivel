@@ -2,8 +2,7 @@ package com.br.pdvpostocombustivel.domain.entity;
 
 import com.br.pdvpostocombustivel.enums.TipoContato;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
 
 import java.util.Objects;
 
@@ -15,19 +14,19 @@ public class Contato {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "O tipo de contato é obrigatório.")
+    @Column(length = 20)
+    private String telefone;
+
+    @Email(message = "E-mail inválido.")
+    @Column(unique = true, length = 100)
+    private String email;
+
+    @Column(length = 255)
+    private String endereco;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_contato", nullable = false, length = 15)
+    @Column(name = "tipo_contato", nullable = false)
     private TipoContato tipoContato;
-
-    @NotBlank(message = "O valor do contato não pode ser vazio.")
-    @Column(nullable = false, length = 255)
-    private String valor;
-
-    @NotNull(message = "O contato deve estar associado a uma pessoa.")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pessoa_id", nullable = false)
-    private Pessoa pessoa;
 
     /**
      * Construtor JPA
@@ -35,10 +34,11 @@ public class Contato {
     protected Contato() {
     }
 
-    public Contato(TipoContato tipoContato, String valor, Pessoa pessoa) {
+    public Contato(String telefone, String email, String endereco, TipoContato tipoContato) {
+        this.telefone = telefone;
+        this.email = email;
+        this.endereco = endereco;
         this.tipoContato = tipoContato;
-        this.valor = valor;
-        this.pessoa = pessoa;
     }
 
     // Getters
@@ -46,29 +46,41 @@ public class Contato {
         return id;
     }
 
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
     public TipoContato getTipoContato() {
         return tipoContato;
     }
 
-    public String getValor() {
-        return valor;
-    }
-
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
     // Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
     public void setTipoContato(TipoContato tipoContato) {
         this.tipoContato = tipoContato;
-    }
-
-    public void setValor(String valor) {
-        this.valor = valor;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
     }
 
     @Override
@@ -88,8 +100,10 @@ public class Contato {
     public String toString() {
         return "Contato{" +
                 "id=" + id +
+                ", telefone='" + telefone + '\'' +
+                ", email='" + email + '\'' +
+                ", endereco='" + endereco + '\'' +
                 ", tipoContato=" + tipoContato +
-                ", valor='" + valor + '\'' +
                 '}';
     }
 }
