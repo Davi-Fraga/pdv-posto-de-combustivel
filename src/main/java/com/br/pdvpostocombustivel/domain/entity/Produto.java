@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "produtos", uniqueConstraints = {
+@Table(name = "produto", uniqueConstraints = {
         @UniqueConstraint(name = "uk_produto_codigo_barras", columnNames = "codigo_barras")
 })
 public class Produto {

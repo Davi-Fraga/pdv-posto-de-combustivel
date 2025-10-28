@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Email;
 import java.util.Objects;
 
 @Entity
-@Table(name = "contatos")
+@Table(name = "contato")
 public class Contato {
 
     @Id
