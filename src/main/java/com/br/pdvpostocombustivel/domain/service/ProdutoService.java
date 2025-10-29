@@ -30,8 +30,8 @@ public class ProdutoService {
 
     @Transactional
     public Produto save(Produto produto) {
-        if (produtoRepository.existsByCodigoBarras(produto.getCodigoBarras())) {
-            throw new ProdutoException("Já existe um produto cadastrado com o código de barras: " + produto.getCodigoBarras());
+        if (produtoRepository.existsByReferencia(produto.getReferencia())) {
+            throw new ProdutoException("Já existe um produto cadastrado com a referência: " + produto.getReferencia());
         }
         return produtoRepository.save(produto);
     }
@@ -40,16 +40,17 @@ public class ProdutoService {
     public Produto update(Long id, Produto produtoAtualizado) {
         Produto produtoExistente = findById(id);
 
-        produtoRepository.findByCodigoBarras(produtoAtualizado.getCodigoBarras()).ifPresent(produto -> {
+        produtoRepository.findByReferencia(produtoAtualizado.getReferencia()).ifPresent(produto -> {
             if (!produto.getId().equals(id)) {
-                throw new ProdutoException("O código de barras " + produtoAtualizado.getCodigoBarras() + " já está em uso por outro produto.");
+                throw new ProdutoException("A referência " + produtoAtualizado.getReferencia() + " já está em uso por outro produto.");
             }
         });
 
         produtoExistente.setNome(produtoAtualizado.getNome());
-        produtoExistente.setDescricao(produtoAtualizado.getDescricao());
-        produtoExistente.setCodigoBarras(produtoAtualizado.getCodigoBarras());
-        produtoExistente.setValorUnitario(produtoAtualizado.getValorUnitario());
+        produtoExistente.setReferencia(produtoAtualizado.getReferencia());
+        produtoExistente.setFornecedor(produtoAtualizado.getFornecedor());
+        produtoExistente.setMarca(produtoAtualizado.getMarca());
+        produtoExistente.setCategoria(produtoAtualizado.getCategoria());
         produtoExistente.setTipoProduto(produtoAtualizado.getTipoProduto());
 
         return produtoRepository.save(produtoExistente);

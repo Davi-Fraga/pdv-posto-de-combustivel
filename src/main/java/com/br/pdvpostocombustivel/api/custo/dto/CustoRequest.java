@@ -2,24 +2,30 @@ package com.br.pdvpostocombustivel.api.custo.dto;
 
 import com.br.pdvpostocombustivel.enums.TipoCusto;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record CustoRequest(
-        @NotBlank(message = "A descrição não pode ser vazia.")
-        String descricao,
+        @NotNull(message = "O imposto é obrigatório.")
+        @DecimalMin(value = "0.0", message = "O imposto deve ser maior ou igual a zero.")
+        BigDecimal imposto,
 
-        @NotNull(message = "O valor é obrigatório.")
-        @DecimalMin(value = "0.0", inclusive = false, message = "O valor deve ser maior que zero.")
-        BigDecimal valor,
+        @NotNull(message = "O custo variável é obrigatório.")
+        @DecimalMin(value = "0.0", message = "O custo variável deve ser maior ou igual a zero.")
+        BigDecimal custoVariavel,
 
-        @NotNull(message = "A data de vencimento é obrigatória.")
-        @FutureOrPresent(message = "A data de vencimento não pode ser no passado.")
-        LocalDate dataVencimento,
+        @NotNull(message = "O custo fixo é obrigatório.")
+        @DecimalMin(value = "0.0", message = "O custo fixo deve ser maior ou igual a zero.")
+        BigDecimal custoFixo,
+
+        @NotNull(message = "A margem de lucro é obrigatória.")
+        @DecimalMin(value = "0.0", message = "A margem de lucro deve ser maior ou igual a zero.")
+        BigDecimal margemLucro,
+
+        @NotNull(message = "A data de processamento é obrigatória.")
+        LocalDate dataProcessamento,
 
         @NotNull(message = "O tipo de custo é obrigatório.")
         TipoCusto tipoCusto

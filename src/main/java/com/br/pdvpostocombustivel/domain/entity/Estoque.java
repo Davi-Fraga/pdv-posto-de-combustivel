@@ -18,27 +18,31 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "O tipo do produto em estoque é obrigatório.")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_estoque", nullable = false, length = 25)
-    private TipoEstoque tipoEstoque;
-
-    @NotBlank(message = "O nome do produto não pode ser vazio.")
-    @Column(name = "nome_produto", nullable = false, length = 100)
-    private String nomeProduto;
-
     @NotNull(message = "A quantidade é obrigatória.")
     @DecimalMin(value = "0.0", message = "A quantidade não pode ser negativa.")
     @Column(nullable = false)
     private BigDecimal quantidade;
 
-    @NotBlank(message = "O nome do fornecedor não pode ser vazio.")
-    @Column(nullable = false, length = 150)
-    private String fornecedor;
+    @NotBlank(message = "O local do tanque não pode ser vazio.")
+    @Column(name = "local_tanque", nullable = false, length = 100)
+    private String localTanque;
 
-    @NotNull(message = "A data de entrada é obrigatória.")
-    @Column(name = "data_entrada", nullable = false)
-    private LocalDate dataEntrada;
+    @NotBlank(message = "O endereço do local não pode ser vazio.")
+    @Column(name = "local_endereco", nullable = false, length = 255)
+    private String localEndereco;
+
+    @NotBlank(message = "O lote de fabricação não pode ser vazio.")
+    @Column(name = "lote_fabricacao", nullable = false, length = 50)
+    private String loteFabricacao;
+
+    @NotNull(message = "A data de validade é obrigatória.")
+    @Column(name = "data_validade", nullable = false)
+    private LocalDate dataValidade;
+
+    @NotNull(message = "O tipo do produto em estoque é obrigatório.")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_estoque", nullable = false, length = 25)
+    private TipoEstoque tipoEstoque;
 
     /**
      * Construtor JPA
@@ -46,12 +50,13 @@ public class Estoque {
     protected Estoque() {
     }
 
-    public Estoque(TipoEstoque tipoEstoque, String nomeProduto, BigDecimal quantidade, String fornecedor, LocalDate dataEntrada) {
-        this.tipoEstoque = tipoEstoque;
-        this.nomeProduto = nomeProduto;
+    public Estoque(BigDecimal quantidade, String localTanque, String localEndereco, String loteFabricacao, LocalDate dataValidade, TipoEstoque tipoEstoque) {
         this.quantidade = quantidade;
-        this.fornecedor = fornecedor;
-        this.dataEntrada = dataEntrada;
+        this.localTanque = localTanque;
+        this.localEndereco = localEndereco;
+        this.loteFabricacao = loteFabricacao;
+        this.dataValidade = dataValidade;
+        this.tipoEstoque = tipoEstoque;
     }
 
     // Getters
@@ -59,45 +64,53 @@ public class Estoque {
         return id;
     }
 
-    public TipoEstoque getTipoEstoque() {
-        return tipoEstoque;
-    }
-
-    public String getNomeProduto() {
-        return nomeProduto;
-    }
-
     public BigDecimal getQuantidade() {
         return quantidade;
     }
 
-    public String getFornecedor() {
-        return fornecedor;
+    public String getLocalTanque() {
+        return localTanque;
     }
 
-    public LocalDate getDataEntrada() {
-        return dataEntrada;
+    public String getLocalEndereco() {
+        return localEndereco;
+    }
+
+    public String getLoteFabricacao() {
+        return loteFabricacao;
+    }
+
+    public LocalDate getDataValidade() {
+        return dataValidade;
+    }
+
+    public TipoEstoque getTipoEstoque() {
+        return tipoEstoque;
     }
 
     // Setters
-    public void setTipoEstoque(TipoEstoque tipoEstoque) {
-        this.tipoEstoque = tipoEstoque;
-    }
-
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
-    }
-
     public void setQuantidade(BigDecimal quantidade) {
         this.quantidade = quantidade;
     }
 
-    public void setFornecedor(String fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setLocalTanque(String localTanque) {
+        this.localTanque = localTanque;
     }
 
-    public void setDataEntrada(LocalDate dataEntrada) {
-        this.dataEntrada = dataEntrada;
+    public void setLocalEndereco(String localEndereco) {
+        this.localEndereco = localEndereco;
+    }
+
+    public void setLoteFabricacao(String loteFabricacao) {
+        this.loteFabricacao = loteFabricacao;
+    }
+
+    public void setDataValidade(LocalDate dataValidade) {
+        this.dataValidade = dataValidade;
+    }
+
+    public void setTipoEstoque(TipoEstoque tipoEstoque) {
+        this.tipoEstoque = tipoEstoque;
     }
 
     @Override
@@ -117,9 +130,10 @@ public class Estoque {
     public String toString() {
         return "Estoque{" +
                 "id=" + id +
-                ", tipoEstoque=" + tipoEstoque +
-                ", nomeProduto='" + nomeProduto + '\'' +
                 ", quantidade=" + quantidade +
+                ", localTanque='" + localTanque + '\'' +
+                ", dataValidade=" + dataValidade +
+                ", tipoEstoque=" + tipoEstoque +
                 '}';
     }
 }

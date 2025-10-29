@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
@@ -17,24 +18,23 @@ public class Preco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "A data de alteração do preço é obrigatória.")
+    @Column(name = "data_alteracao", nullable = false)
+    private LocalDate dataAlteracao;
+
+    @NotNull(message = "A hora de alteração do preço é obrigatória.")
+    @Column(name = "hora_alteracao", nullable = false)
+    private LocalTime horaAlteracao;
+
     @NotNull(message = "O valor do preço é obrigatório.")
     @DecimalMin(value = "0.0", inclusive = false, message = "O valor do preço deve ser maior que zero.")
     @Column(nullable = false)
     private BigDecimal valor;
 
-    @NotNull(message = "A data de vigência do preço é obrigatória.")
-    @Column(name = "data_vigencia", nullable = false)
-    private LocalDate dataVigencia;
-
     @NotNull(message = "O tipo de preço é obrigatório.")
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_preco", nullable = false, length = 20)
     private TipoPreco tipoPreco;
-
-    @NotNull(message = "O preço deve estar associado a um item de estoque.")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "estoque_id", nullable = false)
-    private Estoque estoque;
 
     /**
      * Construtor JPA
@@ -42,11 +42,11 @@ public class Preco {
     protected Preco() {
     }
 
-    public Preco(BigDecimal valor, LocalDate dataVigencia, TipoPreco tipoPreco, Estoque estoque) {
+    public Preco(LocalDate dataAlteracao, LocalTime horaAlteracao, BigDecimal valor, TipoPreco tipoPreco) {
+        this.dataAlteracao = dataAlteracao;
+        this.horaAlteracao = horaAlteracao;
         this.valor = valor;
-        this.dataVigencia = dataVigencia;
         this.tipoPreco = tipoPreco;
-        this.estoque = estoque;
     }
 
     // Getters
@@ -54,37 +54,38 @@ public class Preco {
         return id;
     }
 
-    public BigDecimal getValor() {
-        return valor;
+    public LocalDate getDataAlteracao() {
+        return dataAlteracao;
     }
 
-    public LocalDate getDataVigencia() {
-        return dataVigencia;
+    public LocalTime getHoraAlteracao() {
+        return horaAlteracao;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
     }
 
     public TipoPreco getTipoPreco() {
         return tipoPreco;
     }
 
-    public Estoque getEstoque() {
-        return estoque;
-    }
 
     // Setters
+    public void setDataAlteracao(LocalDate dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
+    }
+
+    public void setHoraAlteracao(LocalTime horaAlteracao) {
+        this.horaAlteracao = horaAlteracao;
+    }
+
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
-    public void setDataVigencia(LocalDate dataVigencia) {
-        this.dataVigencia = dataVigencia;
-    }
-
     public void setTipoPreco(TipoPreco tipoPreco) {
         this.tipoPreco = tipoPreco;
-    }
-
-    public void setEstoque(Estoque estoque) {
-        this.estoque = estoque;
     }
 
     @Override
@@ -106,7 +107,8 @@ public class Preco {
                 "id=" + id +
                 ", valor=" + valor +
                 ", tipoPreco=" + tipoPreco +
-                ", estoqueId=" + (estoque != null ? estoque.getId() : null) +
+                ", dataAlteracao=" + dataAlteracao +
+                ", horaAlteracao=" + horaAlteracao +
                 '}';
     }
 }

@@ -7,9 +7,11 @@ import java.time.LocalDate;
 
 public record CustoResponse(
         Long id,
-        String descricao,
-        BigDecimal valor,
-        LocalDate dataVencimento,
+        BigDecimal imposto,
+        BigDecimal custoVariavel,
+        BigDecimal custoFixo,
+        BigDecimal margemLucro,
+        LocalDate dataProcessamento,
         TipoCusto tipoCusto
 ) {
 }

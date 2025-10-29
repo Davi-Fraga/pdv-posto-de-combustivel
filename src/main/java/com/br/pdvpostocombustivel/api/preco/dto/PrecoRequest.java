@@ -6,14 +6,18 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public record PrecoRequest(
+        @NotNull(message = "A data de alteração do preço é obrigatória.")
+        LocalDate dataAlteracao,
+
+        @NotNull(message = "A hora de alteração do preço é obrigatória.")
+        LocalTime horaAlteracao,
+
         @NotNull(message = "O valor do preço é obrigatório.")
         @DecimalMin(value = "0.0", inclusive = false, message = "O valor do preço deve ser maior que zero.")
         BigDecimal valor,
-
-        @NotNull(message = "A data de vigência é obrigatória.")
-        LocalDate dataVigencia,
 
         @NotNull(message = "O tipo de preço é obrigatório.")
         TipoPreco tipoPreco

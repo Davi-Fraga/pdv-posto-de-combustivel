@@ -55,14 +55,20 @@ public class CustoService {
 
         fields.forEach((key, value) -> {
             switch (key) {
-                case "descricao":
-                    custoExistente.setDescricao((String) value);
+                case "imposto":
+                    custoExistente.setImposto(new BigDecimal(value.toString()));
                     break;
-                case "valor":
-                    custoExistente.setValor(new BigDecimal(value.toString()));
+                case "custoVariavel":
+                    custoExistente.setCustoVariavel(new BigDecimal(value.toString()));
                     break;
-                case "dataVencimento":
-                    custoExistente.setDataVencimento(LocalDate.parse(value.toString()));
+                case "custoFixo":
+                    custoExistente.setCustoFixo(new BigDecimal(value.toString()));
+                    break;
+                case "margemLucro":
+                    custoExistente.setMargemLucro(new BigDecimal(value.toString()));
+                    break;
+                case "dataProcessamento":
+                    custoExistente.setDataProcessamento(LocalDate.parse(value.toString()));
                     break;
                 case "tipoCusto":
                     custoExistente.setTipoCusto(TipoCusto.valueOf((String) value));
@@ -81,9 +87,11 @@ public class CustoService {
 
     private Custo toEntity(CustoRequest request) {
         return new Custo(
-                request.descricao(),
-                request.valor(),
-                request.dataVencimento(),
+                request.imposto(),
+                request.custoVariavel(),
+                request.custoFixo(),
+                request.margemLucro(),
+                request.dataProcessamento(),
                 request.tipoCusto()
         );
     }
@@ -91,9 +99,11 @@ public class CustoService {
     private CustoResponse toResponse(Custo custo) {
         return new CustoResponse(
                 custo.getId(),
-                custo.getDescricao(),
-                custo.getValor(),
-                custo.getDataVencimento(),
+                custo.getImposto(),
+                custo.getCustoVariavel(),
+                custo.getCustoFixo(),
+                custo.getMargemLucro(),
+                custo.getDataProcessamento(),
                 custo.getTipoCusto()
         );
     }

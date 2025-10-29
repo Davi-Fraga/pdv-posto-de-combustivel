@@ -55,20 +55,23 @@ public class EstoqueService {
 
         fields.forEach((key, value) -> {
             switch (key) {
-                case "tipoEstoque":
-                    estoqueExistente.setTipoEstoque(TipoEstoque.valueOf((String) value));
-                    break;
-                case "nomeProduto":
-                    estoqueExistente.setNomeProduto((String) value);
-                    break;
                 case "quantidade":
                     estoqueExistente.setQuantidade(new BigDecimal(value.toString()));
                     break;
-                case "fornecedor":
-                    estoqueExistente.setFornecedor((String) value);
+                case "localTanque":
+                    estoqueExistente.setLocalTanque((String) value);
                     break;
-                case "dataEntrada":
-                    estoqueExistente.setDataEntrada(LocalDate.parse(value.toString()));
+                case "localEndereco":
+                    estoqueExistente.setLocalEndereco((String) value);
+                    break;
+                case "loteFabricacao":
+                    estoqueExistente.setLoteFabricacao((String) value);
+                    break;
+                case "dataValidade":
+                    estoqueExistente.setDataValidade(LocalDate.parse(value.toString()));
+                    break;
+                case "tipoEstoque":
+                    estoqueExistente.setTipoEstoque(TipoEstoque.valueOf((String) value));
                     break;
             }
         });
@@ -84,22 +87,24 @@ public class EstoqueService {
 
     private Estoque toEntity(EstoqueRequest request) {
         return new Estoque(
-                request.tipoEstoque(),
-                request.nomeProduto(),
                 request.quantidade(),
-                request.fornecedor(),
-                request.dataEntrada()
+                request.localTanque(),
+                request.localEndereco(),
+                request.loteFabricacao(),
+                request.dataValidade(),
+                request.tipoEstoque()
         );
     }
 
     private EstoqueResponse toResponse(Estoque estoque) {
         return new EstoqueResponse(
                 estoque.getId(),
-                estoque.getTipoEstoque(),
-                estoque.getNomeProduto(),
                 estoque.getQuantidade(),
-                estoque.getFornecedor(),
-                estoque.getDataEntrada()
+                estoque.getLocalTanque(),
+                estoque.getLocalEndereco(),
+                estoque.getLoteFabricacao(),
+                estoque.getDataValidade(),
+                estoque.getTipoEstoque()
         );
     }
 }

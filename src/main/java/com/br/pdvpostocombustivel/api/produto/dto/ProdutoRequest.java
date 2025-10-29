@@ -1,28 +1,30 @@
 package com.br.pdvpostocombustivel.api.produto.dto;
 
 import com.br.pdvpostocombustivel.enums.TipoProduto;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.math.BigDecimal;
 
 public record ProdutoRequest(
         @NotBlank(message = "O nome do produto não pode ser vazio.")
         @Size(max = 150, message = "O nome do produto não pode exceder 150 caracteres.")
         String nome,
 
-        @Size(max = 255, message = "A descrição não pode exceder 255 caracteres.")
-        String descricao,
+        @NotBlank(message = "A referência não pode ser vazia.")
+        @Size(max = 50, message = "A referência não pode exceder 50 caracteres.")
+        String referencia,
 
-        @NotBlank(message = "O código de barras não pode ser vazio.")
-        @Size(max = 50, message = "O código de barras não pode exceder 50 caracteres.")
-        String codigoBarras,
+        @NotBlank(message = "O fornecedor não pode ser vazio.")
+        @Size(max = 150, message = "O fornecedor não pode exceder 150 caracteres.")
+        String fornecedor,
 
-        @NotNull(message = "O valor unitário é obrigatório.")
-        @DecimalMin(value = "0.0", message = "O valor unitário não pode ser negativo.")
-        BigDecimal valorUnitario,
+        @NotBlank(message = "A marca não pode ser vazia.")
+        @Size(max = 100, message = "A marca não pode exceder 100 caracteres.")
+        String marca,
+
+        @NotBlank(message = "A categoria não pode ser vazia.")
+        @Size(max = 100, message = "A categoria não pode exceder 100 caracteres.")
+        String categoria,
 
         @NotNull(message = "O tipo de produto é obrigatório.")
         TipoProduto tipoProduto

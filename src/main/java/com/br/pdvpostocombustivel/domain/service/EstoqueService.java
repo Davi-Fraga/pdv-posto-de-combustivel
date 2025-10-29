@@ -38,11 +38,12 @@ public class EstoqueService {
     public Estoque update(Long id, Estoque estoqueAtualizado) {
         Estoque estoqueExistente = findById(id);
 
-        estoqueExistente.setTipoEstoque(estoqueAtualizado.getTipoEstoque());
-        estoqueExistente.setNomeProduto(estoqueAtualizado.getNomeProduto());
         estoqueExistente.setQuantidade(estoqueAtualizado.getQuantidade());
-        estoqueExistente.setFornecedor(estoqueAtualizado.getFornecedor());
-        estoqueExistente.setDataEntrada(estoqueAtualizado.getDataEntrada());
+        estoqueExistente.setLocalTanque(estoqueAtualizado.getLocalTanque());
+        estoqueExistente.setLocalEndereco(estoqueAtualizado.getLocalEndereco());
+        estoqueExistente.setLoteFabricacao(estoqueAtualizado.getLoteFabricacao());
+        estoqueExistente.setDataValidade(estoqueAtualizado.getDataValidade());
+        estoqueExistente.setTipoEstoque(estoqueAtualizado.getTipoEstoque());
 
         return estoqueRepository.save(estoqueExistente);
     }

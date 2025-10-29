@@ -3,7 +3,6 @@ package com.br.pdvpostocombustivel.domain.entity;
 import com.br.pdvpostocombustivel.enums.TipoCusto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
@@ -18,18 +17,29 @@ public class Custo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "A descrição não pode ser vazia.")
-    @Column(nullable = false, length = 255)
-    private String descricao;
-
-    @NotNull(message = "O valor é obrigatório.")
-    @DecimalMin(value = "0.0", inclusive = false, message = "O valor deve ser maior que zero.")
+    @NotNull(message = "O imposto é obrigatório.")
+    @DecimalMin(value = "0.0", message = "O imposto deve ser maior ou igual a zero.")
     @Column(nullable = false)
-    private BigDecimal valor;
+    private BigDecimal imposto;
 
-    @NotNull(message = "A data de vencimento é obrigatória.")
-    @Column(name = "data_vencimento", nullable = false)
-    private LocalDate dataVencimento;
+    @NotNull(message = "O custo variável é obrigatório.")
+    @DecimalMin(value = "0.0", message = "O custo variável deve ser maior ou igual a zero.")
+    @Column(name = "custo_variavel", nullable = false)
+    private BigDecimal custoVariavel;
+
+    @NotNull(message = "O custo fixo é obrigatório.")
+    @DecimalMin(value = "0.0", message = "O custo fixo deve ser maior ou igual a zero.")
+    @Column(name = "custo_fixo", nullable = false)
+    private BigDecimal custoFixo;
+
+    @NotNull(message = "A margem de lucro é obrigatória.")
+    @DecimalMin(value = "0.0", message = "A margem de lucro deve ser maior ou igual a zero.")
+    @Column(name = "margem_lucro", nullable = false)
+    private BigDecimal margemLucro;
+
+    @NotNull(message = "A data de processamento é obrigatória.")
+    @Column(name = "data_processamento", nullable = false)
+    private LocalDate dataProcessamento;
 
     @NotNull(message = "O tipo de custo é obrigatório.")
     @Enumerated(EnumType.STRING)
@@ -42,10 +52,12 @@ public class Custo {
     protected Custo() {
     }
 
-    public Custo(String descricao, BigDecimal valor, LocalDate dataVencimento, TipoCusto tipoCusto) {
-        this.descricao = descricao;
-        this.valor = valor;
-        this.dataVencimento = dataVencimento;
+    public Custo(BigDecimal imposto, BigDecimal custoVariavel, BigDecimal custoFixo, BigDecimal margemLucro, LocalDate dataProcessamento, TipoCusto tipoCusto) {
+        this.imposto = imposto;
+        this.custoVariavel = custoVariavel;
+        this.custoFixo = custoFixo;
+        this.margemLucro = margemLucro;
+        this.dataProcessamento = dataProcessamento;
         this.tipoCusto = tipoCusto;
     }
 
@@ -54,16 +66,24 @@ public class Custo {
         return id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public BigDecimal getImposto() {
+        return imposto;
     }
 
-    public BigDecimal getValor() {
-        return valor;
+    public BigDecimal getCustoVariavel() {
+        return custoVariavel;
     }
 
-    public LocalDate getDataVencimento() {
-        return dataVencimento;
+    public BigDecimal getCustoFixo() {
+        return custoFixo;
+    }
+
+    public BigDecimal getMargemLucro() {
+        return margemLucro;
+    }
+
+    public LocalDate getDataProcessamento() {
+        return dataProcessamento;
     }
 
     public TipoCusto getTipoCusto() {
@@ -71,16 +91,24 @@ public class Custo {
     }
 
     // Setters
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setImposto(BigDecimal imposto) {
+        this.imposto = imposto;
     }
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
+    public void setCustoVariavel(BigDecimal custoVariavel) {
+        this.custoVariavel = custoVariavel;
     }
 
-    public void setDataVencimento(LocalDate dataVencimento) {
-        this.dataVencimento = dataVencimento;
+    public void setCustoFixo(BigDecimal custoFixo) {
+        this.custoFixo = custoFixo;
+    }
+
+    public void setMargemLucro(BigDecimal margemLucro) {
+        this.margemLucro = margemLucro;
+    }
+
+    public void setDataProcessamento(LocalDate dataProcessamento) {
+        this.dataProcessamento = dataProcessamento;
     }
 
     public void setTipoCusto(TipoCusto tipoCusto) {
@@ -104,8 +132,11 @@ public class Custo {
     public String toString() {
         return "Custo{" +
                 "id=" + id +
-                ", descricao='" + descricao + '\'' +
-                ", valor=" + valor +
+                ", imposto=" + imposto +
+                ", custoVariavel=" + custoVariavel +
+                ", custoFixo=" + custoFixo +
+                ", margemLucro=" + margemLucro +
+                ", dataProcessamento=" + dataProcessamento +
                 ", tipoCusto=" + tipoCusto +
                 '}';
     }

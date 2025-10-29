@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/precos")
 public class PrecoController {
 
     private final PrecoService precoService;
@@ -21,32 +21,25 @@ public class PrecoController {
         this.precoService = precoService;
     }
 
-    // --- Endpoints aninhados sob Estoque --- //
-
-    @GetMapping("/estoques/{estoqueId}/precos")
-    public ResponseEntity<List<PrecoResponse>> listarPrecosPorEstoque(@PathVariable Long estoqueId) {
-        List<PrecoResponse> precos = precoService.findAllByEstoque(estoqueId);
+    @GetMapping
+    public ResponseEntity<List<PrecoResponse>> listarPrecos() {
+        List<PrecoResponse> precos = precoService.findAll();
         return ResponseEntity.ok(precos);
     }
 
-    @PostMapping("/estoques/{estoqueId}/precos")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PrecoResponse criarPrecoParaEstoque(
-            @PathVariable Long estoqueId,
-            @Valid @RequestBody PrecoRequest request
-    ) {
-        return precoService.create(estoqueId, request);
+    public PrecoResponse criarPreco(@Valid @RequestBody PrecoRequest request) {
+        return precoService.create(request);
     }
 
-    // --- Endpoints diretos para Preco --- //
-
-    @GetMapping("/precos/{precoId}")
+    @GetMapping("/{precoId}")
     public ResponseEntity<PrecoResponse> buscarPrecoPorId(@PathVariable Long precoId) {
         PrecoResponse preco = precoService.findById(precoId);
         return ResponseEntity.ok(preco);
     }
 
-    @PutMapping("/precos/{precoId}")
+    @PutMapping("/{precoId}")
     public ResponseEntity<PrecoResponse> atualizarPreco(
             @PathVariable Long precoId,
             @Valid @RequestBody PrecoRequest request
@@ -55,7 +48,7 @@ public class PrecoController {
         return ResponseEntity.ok(atualizado);
     }
 
-    @PatchMapping("/precos/{precoId}")
+    @PatchMapping("/{precoId}")
     public ResponseEntity<PrecoResponse> atualizarPrecoParcialmente(
             @PathVariable Long precoId,
             @RequestBody Map<String, Object> campos
@@ -64,7 +57,7 @@ public class PrecoController {
         return ResponseEntity.ok(atualizado);
     }
 
-    @DeleteMapping("/precos/{precoId}")
+    @DeleteMapping("/{precoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarPreco(@PathVariable Long precoId) {
         precoService.delete(precoId);

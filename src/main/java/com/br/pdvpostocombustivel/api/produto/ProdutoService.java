@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -57,14 +56,17 @@ public class ProdutoService {
                 case "nome":
                     produtoExistente.setNome((String) value);
                     break;
-                case "descricao":
-                    produtoExistente.setDescricao((String) value);
+                case "referencia":
+                    produtoExistente.setReferencia((String) value);
                     break;
-                case "codigoBarras":
-                    produtoExistente.setCodigoBarras((String) value);
+                case "fornecedor":
+                    produtoExistente.setFornecedor((String) value);
                     break;
-                case "valorUnitario":
-                    produtoExistente.setValorUnitario(new BigDecimal(value.toString()));
+                case "marca":
+                    produtoExistente.setMarca((String) value);
+                    break;
+                case "categoria":
+                    produtoExistente.setCategoria((String) value);
                     break;
                 case "tipoProduto":
                     produtoExistente.setTipoProduto(TipoProduto.valueOf((String) value));
@@ -84,9 +86,10 @@ public class ProdutoService {
     private Produto toEntity(ProdutoRequest request) {
         return new Produto(
                 request.nome(),
-                request.descricao(),
-                request.codigoBarras(),
-                request.valorUnitario(),
+                request.referencia(),
+                request.fornecedor(),
+                request.marca(),
+                request.categoria(),
                 request.tipoProduto()
         );
     }
@@ -95,9 +98,10 @@ public class ProdutoService {
         return new ProdutoResponse(
                 produto.getId(),
                 produto.getNome(),
-                produto.getDescricao(),
-                produto.getCodigoBarras(),
-                produto.getValorUnitario(),
+                produto.getReferencia(),
+                produto.getFornecedor(),
+                produto.getMarca(),
+                produto.getCategoria(),
                 produto.getTipoProduto()
         );
     }

@@ -10,16 +10,16 @@ import java.util.Optional;
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     /**
-     * Encontra um produto pelo seu código de barras.
-     * @param codigoBarras O código de barras a ser buscado.
+     * Encontra um produto pela sua referência.
+     * @param referencia A referência a ser buscada.
      * @return Um Optional contendo o Produto se encontrado, ou vazio caso contrário.
      */
-    Optional<Produto> findByCodigoBarras(String codigoBarras);
+    Optional<Produto> findByReferencia(String referencia);
 
     /**
-     * Verifica se já existe um produto com o código de barras fornecido.
-     * @param codigoBarras O código de barras a ser verificado.
+     * Verifica se já existe um produto com a referência fornecida.
+     * @param referencia A referência a ser verificada.
      * @return true se o produto existir, false caso contrário.
      */
-    boolean existsByCodigoBarras(String codigoBarras);
+    boolean existsByReferencia(String referencia);
 }

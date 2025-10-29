@@ -2,16 +2,14 @@ package com.br.pdvpostocombustivel.domain.entity;
 
 import com.br.pdvpostocombustivel.enums.TipoProduto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
 @Table(name = "produto", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_produto_codigo_barras", columnNames = "codigo_barras")
+        @UniqueConstraint(name = "uk_produto_referencia", columnNames = "referencia")
 })
 public class Produto {
 
@@ -23,17 +21,21 @@ public class Produto {
     @Column(nullable = false, length = 150)
     private String nome;
 
-    @Column(length = 255)
-    private String descricao;
+    @NotBlank(message = "A referência não pode ser vazia.")
+    @Column(nullable = false, unique = true, length = 50)
+    private String referencia;
 
-    @NotBlank(message = "O código de barras não pode ser vazio.")
-    @Column(name = "codigo_barras", nullable = false, unique = true, length = 50)
-    private String codigoBarras;
+    @NotBlank(message = "O fornecedor não pode ser vazio.")
+    @Column(nullable = false, length = 150)
+    private String fornecedor;
 
-    @NotNull(message = "O valor unitário é obrigatório.")
-    @DecimalMin(value = "0.0", message = "O valor unitário não pode ser negativo.")
-    @Column(name = "valor_unitario", nullable = false)
-    private BigDecimal valorUnitario;
+    @NotBlank(message = "A marca não pode ser vazia.")
+    @Column(nullable = false, length = 100)
+    private String marca;
+
+    @NotBlank(message = "A categoria não pode ser vazia.")
+    @Column(nullable = false, length = 100)
+    private String categoria;
 
     @NotNull(message = "O tipo de produto é obrigatório.")
     @Enumerated(EnumType.STRING)
@@ -46,11 +48,12 @@ public class Produto {
     protected Produto() {
     }
 
-    public Produto(String nome, String descricao, String codigoBarras, BigDecimal valorUnitario, TipoProduto tipoProduto) {
+    public Produto(String nome, String referencia, String fornecedor, String marca, String categoria, TipoProduto tipoProduto) {
         this.nome = nome;
-        this.descricao = descricao;
-        this.codigoBarras = codigoBarras;
-        this.valorUnitario = valorUnitario;
+        this.referencia = referencia;
+        this.fornecedor = fornecedor;
+        this.marca = marca;
+        this.categoria = categoria;
         this.tipoProduto = tipoProduto;
     }
 
@@ -63,16 +66,20 @@ public class Produto {
         return nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getReferencia() {
+        return referencia;
     }
 
-    public String getCodigoBarras() {
-        return codigoBarras;
+    public String getFornecedor() {
+        return fornecedor;
     }
 
-    public BigDecimal getValorUnitario() {
-        return valorUnitario;
+    public String getMarca() {
+        return marca;
+    }
+
+    public String getCategoria() {
+        return categoria;
     }
 
     public TipoProduto getTipoProduto() {
@@ -84,16 +91,20 @@ public class Produto {
         this.nome = nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
+    public void setFornecedor(String fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
-    public void setValorUnitario(BigDecimal valorUnitario) {
-        this.valorUnitario = valorUnitario;
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public void setTipoProduto(TipoProduto tipoProduto) {
@@ -105,12 +116,12 @@ public class Produto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return Objects.equals(id, produto.id) && Objects.equals(codigoBarras, produto.codigoBarras);
+        return Objects.equals(id, produto.id) && Objects.equals(referencia, produto.referencia);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, codigoBarras);
+        return Objects.hash(id, referencia);
     }
 
     @Override
@@ -118,7 +129,7 @@ public class Produto {
         return "Produto{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
-                ", codigoBarras='" + codigoBarras + '\'' +
+                ", referencia='" + referencia + '\'' +
                 ", tipoProduto=" + tipoProduto +
                 '}';
     }

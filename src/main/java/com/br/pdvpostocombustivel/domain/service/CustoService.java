@@ -38,9 +38,11 @@ public class CustoService {
     public Custo update(Long id, Custo custoAtualizado) {
         Custo custoExistente = findById(id);
 
-        custoExistente.setDescricao(custoAtualizado.getDescricao());
-        custoExistente.setValor(custoAtualizado.getValor());
-        custoExistente.setDataVencimento(custoAtualizado.getDataVencimento());
+        custoExistente.setImposto(custoAtualizado.getImposto());
+        custoExistente.setCustoVariavel(custoAtualizado.getCustoVariavel());
+        custoExistente.setCustoFixo(custoAtualizado.getCustoFixo());
+        custoExistente.setMargemLucro(custoAtualizado.getMargemLucro());
+        custoExistente.setDataProcessamento(custoAtualizado.getDataProcessamento());
         custoExistente.setTipoCusto(custoAtualizado.getTipoCusto());
 
         return custoRepository.save(custoExistente);

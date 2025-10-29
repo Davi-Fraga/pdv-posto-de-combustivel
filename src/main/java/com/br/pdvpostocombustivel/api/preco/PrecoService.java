@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,42 +25,45 @@ public class PrecoService {
     }
 
     @Transactional(readOnly = true)
-    public List<PrecoResponse> findAllByEstoque(Long estoqueId) {
-        return domainService.findAllByEstoque(estoqueId).stream()
+    public List<PrecoResponse> findAll() {
+        return domainService.findAll().stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public PrecoResponse findById(Long precoId) {
-        return toResponse(domainService.findById(precoId));
+    public PrecoResponse findById(Long id) {
+        return toResponse(domainService.findById(id));
     }
 
     @Transactional
-    public PrecoResponse create(Long estoqueId, PrecoRequest request) {
+    public PrecoResponse create(PrecoRequest request) {
         Preco preco = toEntity(request);
-        Preco novoPreco = domainService.save(estoqueId, preco);
+        Preco novoPreco = domainService.save(preco);
         return toResponse(novoPreco);
     }
 
     @Transactional
-    public PrecoResponse update(Long precoId, PrecoRequest request) {
+    public PrecoResponse update(Long id, PrecoRequest request) {
         Preco precoAtualizado = toEntity(request);
-        Preco precoSalvo = domainService.update(precoId, precoAtualizado);
+        Preco precoSalvo = domainService.update(id, precoAtualizado);
         return toResponse(precoSalvo);
     }
 
     @Transactional
-    public PrecoResponse updatePartial(Long precoId, Map<String, Object> fields) {
-        Preco precoExistente = domainService.findById(precoId);
+    public PrecoResponse updatePartial(Long id, Map<String, Object> fields) {
+        Preco precoExistente = domainService.findById(id);
 
         fields.forEach((key, value) -> {
             switch (key) {
+                case "dataAlteracao":
+                    precoExistente.setDataAlteracao(LocalDate.parse(value.toString()));
+                    break;
+                case "horaAlteracao":
+                    precoExistente.setHoraAlteracao(LocalTime.parse(value.toString()));
+                    break;
                 case "valor":
                     precoExistente.setValor(new BigDecimal(value.toString()));
-                    break;
-                case "dataVigencia":
-                    precoExistente.setDataVigencia(LocalDate.parse(value.toString()));
                     break;
                 case "tipoPreco":
                     precoExistente.setTipoPreco(TipoPreco.valueOf((String) value));
@@ -67,34 +71,31 @@ public class PrecoService {
             }
         });
 
-        // O save aqui é do domainService, mas como o objeto já está carregado, o update funcionaria.
-        // No entanto, para manter o padrão, chamamos o update do domain service.
-        Preco precoSalvo = domainService.update(precoId, precoExistente);
+        Preco precoSalvo = domainService.update(id, precoExistente);
         return toResponse(precoSalvo);
     }
 
     @Transactional
-    public void delete(Long precoId) {
-        domainService.delete(precoId);
+    public void delete(Long id) {
+        domainService.delete(id);
     }
 
     private Preco toEntity(PrecoRequest request) {
-        // O estoque é nulo aqui, pois será definido no serviço de domínio.
         return new Preco(
+                request.dataAlteracao(),
+                request.horaAlteracao(),
                 request.valor(),
-                request.dataVigencia(),
-                request.tipoPreco(),
-                null
+                request.tipoPreco()
         );
     }
 
     private PrecoResponse toResponse(Preco preco) {
         return new PrecoResponse(
                 preco.getId(),
+                preco.getDataAlteracao(),
+                preco.getHoraAlteracao(),
                 preco.getValor(),
-                preco.getDataVigencia(),
-                preco.getTipoPreco(),
-                preco.getEstoque() != null ? preco.getEstoque().getId() : null
+                preco.getTipoPreco()
         );
     }
 }
