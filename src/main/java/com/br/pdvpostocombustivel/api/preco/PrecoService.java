@@ -83,7 +83,7 @@ public class PrecoService {
     private Preco toEntity(PrecoRequest request) {
         return new Preco(
                 request.dataAlteracao(),
-                request.horaAlteracao(),
+                LocalTime.parse(request.horaAlteracao()),
                 request.valor(),
                 request.tipoPreco()
         );
@@ -93,7 +93,7 @@ public class PrecoService {
         return new PrecoResponse(
                 preco.getId(),
                 preco.getDataAlteracao(),
-                preco.getHoraAlteracao(),
+                preco.getHoraAlteracao().toString(),
                 preco.getValor(),
                 preco.getTipoPreco()
         );
