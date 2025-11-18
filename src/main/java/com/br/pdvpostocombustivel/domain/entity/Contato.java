@@ -1,6 +1,7 @@
 package com.br.pdvpostocombustivel.domain.entity;
 
 import com.br.pdvpostocombustivel.enums.TipoContato;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
@@ -27,6 +28,11 @@ public class Contato {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_contato", nullable = false)
     private TipoContato tipoContato;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pessoa_id", nullable = false)
+    @JsonBackReference
+    private Pessoa pessoa;
 
     /**
      * Construtor JPA
@@ -62,6 +68,10 @@ public class Contato {
         return tipoContato;
     }
 
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
     // Setters
     public void setId(Long id) {
         this.id = id;
@@ -81,6 +91,10 @@ public class Contato {
 
     public void setTipoContato(TipoContato tipoContato) {
         this.tipoContato = tipoContato;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
     @Override

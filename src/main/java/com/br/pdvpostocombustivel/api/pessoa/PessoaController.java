@@ -1,12 +1,13 @@
 package com.br.pdvpostocombustivel.api.pessoa;
 
-
 import com.br.pdvpostocombustivel.api.pessoa.dto.PessoaRequest;
 import com.br.pdvpostocombustivel.api.pessoa.dto.PessoaResponse;
-import org.springframework.data.domain.Page;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List; // Added import for List
 
 @RestController
 @RequestMapping("/api/v1/pessoas")
@@ -20,7 +21,7 @@ public class PessoaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PessoaResponse create(@RequestBody PessoaRequest req) {
+    public PessoaResponse create(@Valid @RequestBody PessoaRequest req) {
         return service.create(req);
     }
 
@@ -35,20 +36,20 @@ public class PessoaController {
     }
 
     @GetMapping
-    public Page<PessoaResponse> list(@RequestParam(defaultValue = "0") int page,
+    public List<PessoaResponse> list(@RequestParam(defaultValue = "0") int page,
                                      @RequestParam(defaultValue = "10") int size,
                                      @RequestParam(defaultValue = "id") String sortBy,
                                      @RequestParam(defaultValue = "ASC") Sort.Direction dir) {
-        return service.list(page, size, sortBy, dir);
+        return service.list(page, size, sortBy, dir).getContent(); // Modified to return List
     }
 
     @PutMapping("/{id}")
-    public PessoaResponse update(@PathVariable Long id, @RequestBody PessoaRequest req) {
+    public PessoaResponse update(@PathVariable Long id, @Valid @RequestBody PessoaRequest req) {
         return service.update(id, req);
     }
 
     @PatchMapping("/{id}")
-    public PessoaResponse patch(@PathVariable Long id, @RequestBody PessoaRequest req) {
+    public PessoaResponse patch(@PathVariable Long id, @Valid @RequestBody PessoaRequest req) {
         return service.patch(id, req);
     }
 

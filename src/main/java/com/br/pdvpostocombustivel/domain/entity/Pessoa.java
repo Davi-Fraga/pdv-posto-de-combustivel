@@ -1,11 +1,14 @@
 package com.br.pdvpostocombustivel.domain.entity;
 
 import com.br.pdvpostocombustivel.enums.TipoPessoa;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(
@@ -25,17 +28,14 @@ public class Pessoa {
     @Column(name = "nome_completo", nullable = false, length = 200)
     private String nomeCompleto;
 
-    // CPF (11) ou CNPJ (14). Deixo 20 para folga (hífens/pontos, se algum dia usar formatado).
     @NotBlank
     @Size(max = 20)
     @Column(name = "cpf_cnpj", nullable = false, length = 20, unique = true)
     private String cpfCnpj;
 
-    // CTPS numérico; sem 'length' (não se aplica a Long)
     @Column(name = "numero_ctps")
     private Long numeroCtps;
 
-    // Se quiser opcional, troque para nullable = true e remova @NotNull
     @NotNull
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
@@ -44,6 +44,10 @@ public class Pessoa {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_pessoa", nullable = false, length = 15)
     private TipoPessoa tipoPessoa;
+
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Contato> contatos = new ArrayList<>();
 
     /**
      * Construtor JPA
@@ -110,5 +114,18 @@ public class Pessoa {
 
     public void setTipoPessoa(TipoPessoa tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
+    }
+
+    public List<Contato> getContatos() {
+        return contatos;
+    }
+
+    public void setContatos(List<Contato> contatos) {
+        this.contatos = contatos;
+    }
+
+    public void adicionarContato(Contato contato) {
+        this.contatos.add(contato);
+        contato.setPessoa(this);
     }
 }

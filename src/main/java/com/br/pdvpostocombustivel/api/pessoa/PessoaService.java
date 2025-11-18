@@ -74,14 +74,14 @@ public class PessoaService {
         Pessoa p = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Pessoa não encontrada. id=" + id));
 
-        if (req.nomeCompleto() != null)  p.setNomeCompleto(req.nomeCompleto());
+        if (req.nomeCompleto() != null) p.setNomeCompleto(req.nomeCompleto());
         if (req.cpfCnpj() != null) {
             if (!req.cpfCnpj().equals(p.getCpfCnpj())) {
                 validarUnicidadeCpfCnpj(req.cpfCnpj(), id);
             }
             p.setCpfCnpj(req.cpfCnpj());
         }
-        if (req.numeroCtps() != null)    p.setNumeroCtps(req.numeroCtps());
+        if (req.numeroCtps() != null) p.setNumeroCtps(req.numeroCtps());
         if (req.dataNascimento() != null) p.setDataNascimento(req.dataNascimento());
 
         return toResponse(repository.save(p));
@@ -114,18 +114,17 @@ public class PessoaService {
         );
     }
 
-    private PessoaResponse toResponse(Pessoa p) {
+    private PessoaResponse toResponse(Pessoa pessoa) {
         return new PessoaResponse(
-
-                p.getNomeCompleto(),
-                p.getCpfCnpj(),
-                p.getNumeroCtps(),
-                p.getDataNascimento()
+                pessoa.getId(),                 // <<< AQUI: preenchendo o ID
+                pessoa.getNomeCompleto(),
+                pessoa.getCpfCnpj(),
+                pessoa.getNumeroCtps(),
+                pessoa.getDataNascimento()
         );
     }
+
 }
-
-
 
 
 

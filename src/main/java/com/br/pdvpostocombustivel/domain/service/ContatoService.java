@@ -47,7 +47,7 @@ public class ContatoService {
     }
 
     @Transactional
-    public Contato patch(Long id, Contato contatoAtualizado) {
+    public Contato patch(Long id, Contato contatoAtualizado, Object o) {
         Contato contatoExistente = findById(id);
         if (StringUtils.hasText(contatoAtualizado.getTelefone())) {
             contatoExistente.setTelefone(contatoAtualizado.getTelefone());
